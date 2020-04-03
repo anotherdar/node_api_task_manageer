@@ -42,11 +42,6 @@ router.delete('/user/me', auth , async (req, res) => {
     }
 })
 
-const upload = multer({
-    dest: 'avatars'
-})
-//Post Avatar
-router.post('/user/me/avatar',upload.single('avatar'), (req, res) => {
-    res.send()
-})
+
+
 module.exports = router

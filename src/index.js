@@ -5,23 +5,18 @@ require('./db/mongoose')
 const userRouter = require('./routes/user')
 const taskRouter = require('./routes/task')
 const authRouter = require('./routes/auth')
+const avatarRouter = require('./routes/avatar')
 
 const app = express()
 const port = process.env.PORT || 8080
 
-// const multer = require('multer')
-// const upload = multer({
-//     dest: 'images'
-// })
-// app.post('/upload', upload.single('upload') ,(req, res) => {
-//     res.send()
-// })
-
-
 app.use(express.json())
 
-app.use(userRouter)
-app.use(taskRouter)
-app.use(authRouter)
+const routes = [userRouter, taskRouter, authRouter, avatarRouter]
+
+routes.forEach(route => {
+    app.use(route)
+})
+
 
 app.listen(port, () => console.log('server running on port: ' + port))
