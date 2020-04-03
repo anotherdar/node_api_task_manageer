@@ -2,17 +2,36 @@
 
 task manager api build with node js and mongo db
 
-## Technologies
+## endpoint list
 
-```json
-    {
-        "bcryptjs": "^2.4.3",
-        "express": "^4.17.1",
-        "jsonwebtoken": "^8.5.1",
-        "mongodb": "^3.5.5",
-        "mongoose": "^5.9.7",
-        "multer": "^1.4.2",
-        "sharp": "^0.25.2",
-        "validator": "^13.0.0"
-    },
-```
+### main rout
+
+1. "/" : welcome message
+
+### authentication routes
+
+1. "/auth/login" 
+2. "/auth/signin" 
+3. "/auth/logout" 
+4. "/auth/logoutAll"
+
+### user routes
+
+1. "/user/me"
+2. "/user/me" PUT methods
+3. "/user/me" DELETE methods
+4. "/user/:id/avatar" 
+
+### avatar routes
+
+1. "/user/me/avatar" POST 
+2. "/user/me/avatar" DELETE
+
+### task routes
+
+1. "/task" POST
+2. "/task/:id" PUT
+3. "/tasks" || "/tasks?limit=2&skip=4" || /tasks?sortBy=createdAt:(asc | desc)
+4. "task/:id" GET
+5. "/task/:id" DELETE
+
