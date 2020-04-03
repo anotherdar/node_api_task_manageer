@@ -20,13 +20,6 @@ routes.forEach(route => {
     app.use(route)
 })
 
-app.get('', (req, res) => {
-    try {
-        res.send({welcome: 'To task manager api'})
-    } catch (e) {
-        res.status(500).send()
-    }
-})
 
 
 app.listen(port, () => console.log('server running on port: ' + port))
