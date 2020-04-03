@@ -1,4 +1,6 @@
 const express = require('express')
+const dotenv = require('dotenv');
+dotenv.config();
 
 require('./db/mongoose')
 
@@ -8,7 +10,7 @@ const authRouter = require('./routes/auth')
 const avatarRouter = require('./routes/avatar')
 
 const app = express()
-const port = process.env.PORT || 8080
+const port = process.env.PORT
 
 app.use(express.json())
 

@@ -1,8 +1,8 @@
 const express = require('express')
 const router = new express.Router()
-const multer = require('multer')
 
-// const {User} = require('../models/user')
+const {sendCancellationEmail} = require('../emails/account')
+
 const {isValidToUpdate} = require('../../utils/IsValidToUpdate')
 const { auth } = require('../middleware/auth')
 
@@ -35,6 +35,7 @@ router.put('/user/me', auth ,async (req, res) => {
 router.delete('/user/me', auth , async (req, res) => {
     try{
         await req.user.remove()
+        sendCancellationEmail(req.user.email, req.user.name)
         res.send(req.user)
 
     } catch(e) {

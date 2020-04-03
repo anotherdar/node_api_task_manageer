@@ -7,3 +7,7 @@ yarn-error.log
 
 avatars/
 images/
+
+dev.env
+.env
+config/
