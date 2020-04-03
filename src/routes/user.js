@@ -1,7 +1,8 @@
 const express = require('express')
 const router = new express.Router()
+const multer = require('multer')
 
-const {User} = require('../models/user')
+// const {User} = require('../models/user')
 const {isValidToUpdate} = require('../../utils/IsValidToUpdate')
 const { auth } = require('../middleware/auth')
 
@@ -12,7 +13,6 @@ router.get('/user/me', auth ,async (req, res) => {
   
 //update user
 router.put('/user/me', auth ,async (req, res) => {
-    const _id = req.params.id
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password', 'age']
 
@@ -42,5 +42,11 @@ router.delete('/user/me', auth , async (req, res) => {
     }
 })
 
-
+const upload = multer({
+    dest: 'avatars'
+})
+//Post Avatar
+router.post('/user/me/avatar',upload.single('avatar'), (req, res) => {
+    res.send()
+})
 module.exports = router
