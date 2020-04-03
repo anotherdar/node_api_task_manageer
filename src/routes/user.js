@@ -3,41 +3,15 @@ const router = new express.Router()
 
 const {User} = require('../models/user')
 const {isValidToUpdate} = require('../../utils/IsValidToUpdate')
+const { auth } = require('../middleware/auth')
 
-router.post('/user', async (req, res) => {
-    const user = new User(req.body)
-    try {
-        await user.save()
-        res.status(201).send(user)
-    } catch(err) {
-        res.status(400).send(err)
-    }
+//get users 
+router.get('/user/me', auth ,async (req, res) => {
+    res.send(req.user)
 })
- 
-router.get('/users', async (req, res) => {
-    try {
-        const users = await User.find({})
-        res.send(users)
-    } catch (e) {
-        res.status(500).send()
-    }
-})
- 
-router.get('/user/:id', async (req, res) => {
-    const _id = req.params.id
-    try {
-       const user = await User.findById(_id)
-       
-       if(!user) return res.status(404).send()
-
-       res.send(user)
-
-    } catch(e) {
-        res.status(500).send()
-    }
-})
- 
-router.put('/user/:id', async (req, res) => {
+  
+//update user
+router.put('/user/me', auth ,async (req, res) => {
     const _id = req.params.id
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password', 'age']
@@ -47,32 +21,26 @@ router.put('/user/:id', async (req, res) => {
     }
 
     try {
-        const user = await User.findById(_id)
+        const user = req.user
 
         updates.forEach((update) => user[update] = req.body[update])
         await user.save()
-
-        if(!user) return res.status(404).send()
-
         res.send(user)
     } catch(e) {
         res.status(400).send(e)
     }
 })
 
-router.delete('/user/:id', async (req, res) => {
-    const _id = req.params.id
-
+//delete user
+router.delete('/user/me', auth , async (req, res) => {
     try{
-        const user = await User.findByIdAndDelete(_id)
-
-        if(!user) return res.status(404).send({error: 'User not found'})
-
-        res.send(user)
+        await req.user.remove()
+        res.send(req.user)
 
     } catch(e) {
         res.status(500).send(e)
     }
 })
+
 
 module.exports = router
