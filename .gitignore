@@ -11,3 +11,4 @@ images/
 dev.env
 .env
 config/
+jest.config.js
